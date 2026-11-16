@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Ledgerly</string>
     <string name="greeting">Hello %1$s!</string>
+    <string name="transaction_type_transfer">Transfer</string>
 </resources>
