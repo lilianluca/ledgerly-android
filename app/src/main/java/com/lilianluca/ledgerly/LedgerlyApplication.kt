@@ -1,16 +1,8 @@
 package com.lilianluca.ledgerly
 
 import android.app.Application
-import com.lilianluca.ledgerly.di.AppContainer
+import dagger.hilt.android.HiltAndroidApp
 
-/** Lives for the whole app process; holds the dependency container shared by all screens. */
-class LedgerlyApplication : Application() {
-
-    lateinit var container: AppContainer
-        private set
-
-    override fun onCreate() {
-        super.onCreate()
-        container = AppContainer(context = this)
-    }
-}
+/** Application entry point; Hilt creates the app-wide dependency container here. */
+@HiltAndroidApp
+class LedgerlyApplication : Application()

@@ -1,25 +1,23 @@
 package com.lilianluca.ledgerly.ui.addtransaction
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.lilianluca.ledgerly.LedgerlyApplication
 import com.lilianluca.ledgerly.data.repository.TransactionRepository
 import com.lilianluca.ledgerly.domain.model.Transaction
 import com.lilianluca.ledgerly.domain.model.TransactionType
 import com.lilianluca.ledgerly.util.parseAmount
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
 /** Holds the form state, validates input and saves the new transaction. */
-class AddTransactionViewModel(
+@HiltViewModel
+class AddTransactionViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository,
 ) : ViewModel() {
 
@@ -80,16 +78,6 @@ class AddTransactionViewModel(
                 ),
             )
             _uiState.update { it.copy(isSaving = false, isSaved = true) }
-        }
-    }
-
-    companion object {
-        // Manual DI: pulls the repository from the app container. Replaced by Hilt in milestone 4.
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val app = this[APPLICATION_KEY] as LedgerlyApplication
-                AddTransactionViewModel(app.container.transactionRepository)
-            }
         }
     }
 }

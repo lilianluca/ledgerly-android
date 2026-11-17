@@ -6,9 +6,10 @@ import com.lilianluca.ledgerly.data.local.entity.toEntity
 import com.lilianluca.ledgerly.domain.model.Transaction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 /** Stores transactions in the Room database, so they survive app restarts. */
-class RoomTransactionRepository(
+class RoomTransactionRepository @Inject constructor(
     private val transactionDao: TransactionDao,
 ) : TransactionRepository {
 

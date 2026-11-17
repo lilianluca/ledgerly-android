@@ -20,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.lilianluca.ledgerly.R
 import com.lilianluca.ledgerly.data.sample.sampleTransactions
 import com.lilianluca.ledgerly.ui.theme.LedgerlyTheme
@@ -30,7 +30,7 @@ import com.lilianluca.ledgerly.ui.theme.LedgerlyTheme
 fun TransactionsRoute(
     onAddTransactionClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: TransactionsViewModel = viewModel(factory = TransactionsViewModel.Factory),
+    viewModel: TransactionsViewModel = hiltViewModel(),
 ) {
     // Collects only while the screen is at least STARTED (visible), saving resources in background
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

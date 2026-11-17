@@ -48,7 +48,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.lilianluca.ledgerly.R
 import com.lilianluca.ledgerly.domain.model.TransactionType
 import com.lilianluca.ledgerly.ui.theme.LedgerlyTheme
@@ -62,7 +62,7 @@ import java.time.ZoneOffset
 fun AddTransactionRoute(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: AddTransactionViewModel = viewModel(factory = AddTransactionViewModel.Factory),
+    viewModel: AddTransactionViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
