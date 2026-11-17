@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ledgerly</string>
-    <string name="greeting">Ahoj %1$s!</string>
+    <string name="transactions_title">Transakce</string>
     <string name="transaction_type_transfer">Převod</string>
 </resources>
