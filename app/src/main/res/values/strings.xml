@@ -2,5 +2,9 @@
 <resources>
     <string name="app_name">Ledgerly</string>
     <string name="transactions_title">Transactions</string>
+    <string name="transactions_empty">No transactions yet</string>
     <string name="transaction_type_transfer">Transfer</string>
+    <string name="add_transaction">Add transaction</string>
+    <string name="add_transaction_title">New transaction</string>
+    <string name="navigate_back">Back</string>
 </resources>

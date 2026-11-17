@@ -2,5 +2,9 @@
 <resources>
     <string name="app_name">Ledgerly</string>
     <string name="transactions_title">Transakce</string>
+    <string name="transactions_empty">Zatím žádné transakce</string>
     <string name="transaction_type_transfer">Převod</string>
+    <string name="add_transaction">Přidat transakci</string>
+    <string name="add_transaction_title">Nová transakce</string>
+    <string name="navigate_back">Zpět</string>
 </resources>
