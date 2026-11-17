@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.lilianluca.ledgerly.R
+import com.lilianluca.ledgerly.data.sample.sampleTransactions
 import com.lilianluca.ledgerly.domain.model.Transaction
 import com.lilianluca.ledgerly.domain.model.TransactionType
 import com.lilianluca.ledgerly.ui.theme.LedgerlyTheme

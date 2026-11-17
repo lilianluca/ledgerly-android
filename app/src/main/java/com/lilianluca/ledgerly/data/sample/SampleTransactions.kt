@@ -1,4 +1,4 @@
-package com.lilianluca.ledgerly.ui.transactions
+package com.lilianluca.ledgerly.data.sample
 
 import com.lilianluca.ledgerly.domain.model.Transaction
 import com.lilianluca.ledgerly.domain.model.TransactionType

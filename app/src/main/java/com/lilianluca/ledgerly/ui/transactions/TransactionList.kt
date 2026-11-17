@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.lilianluca.ledgerly.data.sample.sampleTransactions
 import com.lilianluca.ledgerly.domain.model.Transaction
 import com.lilianluca.ledgerly.ui.theme.LedgerlyTheme
 
