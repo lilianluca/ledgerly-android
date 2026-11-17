@@ -9,6 +9,7 @@
     <string name="add_transaction">Add transaction</string>
     <string name="add_transaction_title">New transaction</string>
     <string name="navigate_back">Back</string>
+    <string name="default_wallet_name">Cash</string>
 
     <!-- Add transaction form -->
     <string name="field_amount">Amount</string>

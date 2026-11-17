@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.lilianluca.ledgerly.data.repository.TransactionRepository
 import com.lilianluca.ledgerly.domain.model.Transaction
 import com.lilianluca.ledgerly.domain.model.TransactionType
+import com.lilianluca.ledgerly.domain.model.Wallet
 import com.lilianluca.ledgerly.util.parseAmount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -72,6 +73,9 @@ class AddTransactionViewModel @Inject constructor(
                     id = 0, // assigned by the repository
                     type = state.type,
                     amount = amount,
+                    // Temporary until the wallet picker (step 5.4): everything goes to the default wallet
+                    walletId = Wallet.DEFAULT_ID,
+                    toWalletId = if (state.type == TransactionType.TRANSFER) Wallet.DEFAULT_ID else null,
                     category = if (needsCategory) state.category.trim() else null,
                     date = state.date,
                     note = state.note.trim().ifBlank { null },

@@ -9,6 +9,7 @@
     <string name="add_transaction">Přidat transakci</string>
     <string name="add_transaction_title">Nová transakce</string>
     <string name="navigate_back">Zpět</string>
+    <string name="default_wallet_name">Hotovost</string>
 
     <!-- Add transaction form -->
     <string name="field_amount">Částka</string>
