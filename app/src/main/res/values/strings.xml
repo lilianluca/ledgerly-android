@@ -3,8 +3,23 @@
     <string name="app_name">Ledgerly</string>
     <string name="transactions_title">Transactions</string>
     <string name="transactions_empty">No transactions yet</string>
+    <string name="transaction_type_income">Income</string>
+    <string name="transaction_type_expense">Expense</string>
     <string name="transaction_type_transfer">Transfer</string>
     <string name="add_transaction">Add transaction</string>
     <string name="add_transaction_title">New transaction</string>
     <string name="navigate_back">Back</string>
+
+    <!-- Add transaction form -->
+    <string name="field_amount">Amount</string>
+    <string name="field_category">Category</string>
+    <string name="field_date">Date</string>
+    <string name="field_note">Note (optional)</string>
+    <string name="currency_suffix" translatable="false">Kč</string>
+    <string name="select_date">select date</string>
+    <string name="save">Save</string>
+    <string name="error_amount_empty">Enter an amount</string>
+    <string name="error_amount_invalid">Enter a valid amount, e.g. 349.50</string>
+    <string name="error_amount_zero">Amount must be greater than zero</string>
+    <string name="error_category_empty">Enter a category</string>
 </resources>

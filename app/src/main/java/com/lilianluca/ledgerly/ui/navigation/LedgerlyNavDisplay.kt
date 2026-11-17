@@ -8,7 +8,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import com.lilianluca.ledgerly.ui.addtransaction.AddTransactionScreen
+import com.lilianluca.ledgerly.ui.addtransaction.AddTransactionRoute
 import com.lilianluca.ledgerly.ui.transactions.TransactionsRoute
 
 /** App navigation: owns the back stack and maps each key to its screen. */
@@ -35,7 +35,7 @@ fun LedgerlyNavDisplay(modifier: Modifier = Modifier) {
                 )
             }
             entry<AddTransactionNavKey> {
-                AddTransactionScreen(
+                AddTransactionRoute(
                     onNavigateBack = dropUnlessResumed { backStack.removeLastOrNull() },
                 )
             }
