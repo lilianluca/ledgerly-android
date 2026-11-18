@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.lilianluca.ledgerly.R
 import com.lilianluca.ledgerly.data.sample.sampleTransactions
+import com.lilianluca.ledgerly.ui.components.withFabClearance
 import com.lilianluca.ledgerly.ui.theme.LedgerlyTheme
 
 /** Stateful entry point: obtains the ViewModel and observes its state. */
@@ -80,7 +81,7 @@ fun TransactionsScreen(
                 transactions = uiState.transactions,
                 modifier = Modifier.fillMaxSize(),
                 // Padding goes inside the list, so content can scroll behind system bars
-                contentPadding = innerPadding,
+                contentPadding = innerPadding.withFabClearance(),
             )
         }
     }

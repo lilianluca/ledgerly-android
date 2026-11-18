@@ -11,3 +11,9 @@ data object TransactionsNavKey : NavKey
 
 @Serializable
 data object AddTransactionNavKey : NavKey
+
+@Serializable
+data object WalletsNavKey : NavKey
+
+@Serializable
+data object AddWalletNavKey : NavKey

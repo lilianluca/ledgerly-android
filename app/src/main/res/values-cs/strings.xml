@@ -22,4 +22,16 @@
     <string name="error_amount_invalid">Zadejte platnou částku, např. 349,50</string>
     <string name="error_amount_zero">Částka musí být větší než nula</string>
     <string name="error_category_empty">Zadejte kategorii</string>
+
+    <!-- Wallets -->
+    <string name="wallets_title">Peněženky</string>
+    <string name="wallets_total">Celkový zůstatek</string>
+    <string name="wallet_type_cash">Hotovost</string>
+    <string name="wallet_type_bank">Účet</string>
+    <string name="wallet_type_savings">Spoření</string>
+    <string name="add_wallet">Přidat peněženku</string>
+    <string name="add_wallet_title">Nová peněženka</string>
+    <string name="field_wallet_name">Název</string>
+    <string name="field_initial_balance">Počáteční zůstatek (nepovinné)</string>
+    <string name="error_wallet_name_empty">Zadejte název</string>
 </resources>
