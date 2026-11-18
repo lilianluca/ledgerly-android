@@ -1,7 +1,9 @@
 package com.lilianluca.ledgerly.di
 
 import com.lilianluca.ledgerly.data.repository.RoomTransactionRepository
+import com.lilianluca.ledgerly.data.repository.RoomWalletRepository
 import com.lilianluca.ledgerly.data.repository.TransactionRepository
+import com.lilianluca.ledgerly.data.repository.WalletRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,4 +18,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindTransactionRepository(impl: RoomTransactionRepository): TransactionRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindWalletRepository(impl: RoomWalletRepository): WalletRepository
 }
