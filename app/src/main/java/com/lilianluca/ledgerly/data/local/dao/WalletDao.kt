@@ -11,6 +11,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WalletDao {
 
+    /** Live query of all wallets including archived ones, e.g. to show names in old transactions. */
+    @Query("SELECT * FROM wallets ORDER BY id")
+    fun observeAll(): Flow<List<WalletEntity>>
+
     /** Live query of non-archived wallets, oldest first (the default wallet comes first). */
     @Query("SELECT * FROM wallets WHERE isArchived = 0 ORDER BY id")
     fun observeActive(): Flow<List<WalletEntity>>

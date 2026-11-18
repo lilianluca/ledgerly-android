@@ -18,6 +18,7 @@ fun formatAmount(amount: Long, locale: Locale): String {
     }
     // BigDecimal keeps the value exact, unlike amount / 100.0
     return format.format(BigDecimal.valueOf(amount, 2))
+        .replace('-', '−') // typographic minus, same as in the transaction list
 }
 
 /** Formats a date in the medium localized style, e.g. "16. 11. 2026" (cs) or "Nov 16, 2026" (en). */

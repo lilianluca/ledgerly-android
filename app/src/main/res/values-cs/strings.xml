@@ -34,4 +34,8 @@
     <string name="field_wallet_name">Název</string>
     <string name="field_initial_balance">Počáteční zůstatek (nepovinné)</string>
     <string name="error_wallet_name_empty">Zadejte název</string>
+    <string name="field_from_wallet">Z peněženky</string>
+    <string name="field_to_wallet">Do peněženky</string>
+    <string name="error_to_wallet_missing">Vyberte cílovou peněženku</string>
+    <string name="error_no_other_wallet">Nejdřív přidejte další peněženku</string>
 </resources>

@@ -35,4 +35,8 @@
     <string name="field_wallet_name">Name</string>
     <string name="field_initial_balance">Initial balance (optional)</string>
     <string name="error_wallet_name_empty">Enter a name</string>
+    <string name="field_from_wallet">From wallet</string>
+    <string name="field_to_wallet">To wallet</string>
+    <string name="error_to_wallet_missing">Select a destination wallet</string>
+    <string name="error_no_other_wallet">Add another wallet first</string>
 </resources>

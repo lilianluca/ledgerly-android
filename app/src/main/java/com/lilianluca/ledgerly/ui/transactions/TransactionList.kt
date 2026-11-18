@@ -6,14 +6,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.lilianluca.ledgerly.data.sample.sampleTransactions
-import com.lilianluca.ledgerly.domain.model.Transaction
 import com.lilianluca.ledgerly.ui.theme.LedgerlyTheme
 
 /** Stateless, scrollable list of transactions. Only visible rows are composed. */
 @Composable
 fun TransactionList(
-    transactions: List<Transaction>,
+    transactions: List<TransactionListItem>,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
 ) {
@@ -22,8 +20,8 @@ fun TransactionList(
         contentPadding = contentPadding,
     ) {
         // Stable keys let Compose track rows across list changes (like React's `key`)
-        items(transactions, key = { it.id }) { transaction ->
-            TransactionItem(transaction)
+        items(transactions, key = { it.transaction.id }) { item ->
+            TransactionItem(item)
         }
     }
 }
@@ -32,6 +30,6 @@ fun TransactionList(
 @Composable
 private fun TransactionListPreview() {
     LedgerlyTheme {
-        TransactionList(transactions = sampleTransactions)
+        TransactionList(transactions = sampleTransactionItems)
     }
 }

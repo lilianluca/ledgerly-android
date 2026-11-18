@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.lilianluca.ledgerly.R
-import com.lilianluca.ledgerly.data.sample.sampleTransactions
 import com.lilianluca.ledgerly.ui.components.withFabClearance
 import com.lilianluca.ledgerly.ui.theme.LedgerlyTheme
 
@@ -105,7 +104,7 @@ private fun CenteredBox(
 private fun TransactionsScreenPreview() {
     LedgerlyTheme {
         TransactionsScreen(
-            uiState = TransactionsUiState(sampleTransactions, isLoading = false),
+            uiState = TransactionsUiState(sampleTransactionItems, isLoading = false),
             onAddTransactionClick = {},
         )
     }
@@ -116,7 +115,7 @@ private fun TransactionsScreenPreview() {
 private fun TransactionsScreenDarkPreview() {
     LedgerlyTheme {
         TransactionsScreen(
-            uiState = TransactionsUiState(sampleTransactions, isLoading = false),
+            uiState = TransactionsUiState(sampleTransactionItems, isLoading = false),
             onAddTransactionClick = {},
         )
     }

@@ -17,6 +17,9 @@ class RoomWalletRepository @Inject constructor(
     override fun observeWallets(): Flow<List<Wallet>> =
         walletDao.observeActive().map { rows -> rows.map { it.toDomain() } }
 
+    override fun observeAllWallets(): Flow<List<Wallet>> =
+        walletDao.observeAll().map { rows -> rows.map { it.toDomain() } }
+
     override fun observeWalletsWithBalance(): Flow<List<WalletWithBalance>> =
         walletDao.observeActiveWithBalance().map { rows -> rows.map { it.toDomain() } }
 

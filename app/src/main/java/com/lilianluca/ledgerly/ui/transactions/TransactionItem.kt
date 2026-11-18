@@ -10,30 +10,33 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.lilianluca.ledgerly.R
-import com.lilianluca.ledgerly.data.sample.sampleTransactions
-import com.lilianluca.ledgerly.domain.model.Transaction
 import com.lilianluca.ledgerly.domain.model.TransactionType
 import com.lilianluca.ledgerly.ui.theme.LedgerlyTheme
 import com.lilianluca.ledgerly.util.formatAmount
 import com.lilianluca.ledgerly.util.formatDate
 
-/** A single row in the transaction list: category, date with note, and signed amount. */
+/** A single row in the transaction list: category, date with wallet and note, signed amount. */
 @Composable
 fun TransactionItem(
-    transaction: Transaction,
+    item: TransactionListItem,
     modifier: Modifier = Modifier,
 ) {
+    val transaction = item.transaction
     // Current app locale; reading it here makes the item update when the language changes
     val locale = LocalConfiguration.current.locales[0]
 
     val title = transaction.category ?: stringResource(R.string.transaction_type_transfer)
-    val details = listOfNotNull(formatDate(transaction.date, locale), transaction.note)
+    // "Cash" for income and expenses, "Bank → Cash" for transfers
+    val wallets = listOfNotNull(item.walletName, item.toWalletName)
+        .joinToString(" → ")
+        .ifEmpty { null }
+    val details = listOfNotNull(formatDate(transaction.date, locale), wallets, transaction.note)
         .joinToString(" · ")
 
     val amount = formatAmount(transaction.amount, locale)
     val (amountText, amountColor) = when (transaction.type) {
         TransactionType.INCOME -> "+$amount" to MaterialTheme.colorScheme.primary
-        TransactionType.EXPENSE -> "−$amount" to MaterialTheme.colorScheme.error // U+2212 minus sign
+        TransactionType.EXPENSE -> "−$amount" to MaterialTheme.colorScheme.error // minus sign
         TransactionType.TRANSFER -> amount to MaterialTheme.colorScheme.onSurfaceVariant
     }
 
@@ -61,7 +64,7 @@ fun TransactionItem(
 @Composable
 private fun TransactionItemIncomePreview() {
     LedgerlyTheme {
-        TransactionItem(sampleTransactions.first { it.type == TransactionType.INCOME })
+        TransactionItem(sampleTransactionItems.first { it.transaction.type == TransactionType.INCOME })
     }
 }
 
@@ -69,7 +72,7 @@ private fun TransactionItemIncomePreview() {
 @Composable
 private fun TransactionItemExpensePreview() {
     LedgerlyTheme {
-        TransactionItem(sampleTransactions.first { it.type == TransactionType.EXPENSE })
+        TransactionItem(sampleTransactionItems.first { it.transaction.type == TransactionType.EXPENSE })
     }
 }
 
@@ -77,7 +80,7 @@ private fun TransactionItemExpensePreview() {
 @Composable
 private fun TransactionItemTransferPreview() {
     LedgerlyTheme {
-        TransactionItem(sampleTransactions.first { it.type == TransactionType.TRANSFER })
+        TransactionItem(sampleTransactionItems.first { it.transaction.type == TransactionType.TRANSFER })
     }
 }
 
@@ -85,6 +88,6 @@ private fun TransactionItemTransferPreview() {
 @Composable
 private fun TransactionItemCzechPreview() {
     LedgerlyTheme {
-        TransactionItem(sampleTransactions.first { it.type == TransactionType.EXPENSE })
+        TransactionItem(sampleTransactionItems.first { it.transaction.type == TransactionType.TRANSFER })
     }
 }

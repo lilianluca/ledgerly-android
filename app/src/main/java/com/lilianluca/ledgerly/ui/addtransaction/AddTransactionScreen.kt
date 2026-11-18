@@ -16,7 +16,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -51,6 +55,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.lilianluca.ledgerly.R
 import com.lilianluca.ledgerly.domain.model.TransactionType
+import com.lilianluca.ledgerly.domain.model.Wallet
+import com.lilianluca.ledgerly.domain.model.WalletType
 import com.lilianluca.ledgerly.ui.theme.LedgerlyTheme
 import com.lilianluca.ledgerly.util.formatDate
 import java.time.Instant
@@ -76,6 +82,8 @@ fun AddTransactionRoute(
         onNavigateBack = onNavigateBack,
         onTypeChange = viewModel::onTypeChange,
         onAmountChange = viewModel::onAmountChange,
+        onWalletChange = viewModel::onWalletChange,
+        onToWalletChange = viewModel::onToWalletChange,
         onCategoryChange = viewModel::onCategoryChange,
         onDateChange = viewModel::onDateChange,
         onNoteChange = viewModel::onNoteChange,
@@ -92,6 +100,8 @@ fun AddTransactionScreen(
     onNavigateBack: () -> Unit,
     onTypeChange: (TransactionType) -> Unit,
     onAmountChange: (String) -> Unit,
+    onWalletChange: (Long) -> Unit,
+    onToWalletChange: (Long) -> Unit,
     onCategoryChange: (String) -> Unit,
     onDateChange: (LocalDate) -> Unit,
     onNoteChange: (String) -> Unit,
@@ -152,8 +162,37 @@ fun AddTransactionScreen(
                 modifier = Modifier.fillMaxWidth(),
             )
 
+            val isTransfer = uiState.type == TransactionType.TRANSFER
+
+            WalletDropdown(
+                // Income goes into the wallet, expenses and transfers leave it
+                label = stringResource(
+                    if (uiState.type == TransactionType.INCOME) {
+                        R.string.field_to_wallet
+                    } else {
+                        R.string.field_from_wallet
+                    },
+                ),
+                wallets = uiState.wallets,
+                selectedId = uiState.walletId,
+                onSelect = onWalletChange,
+                modifier = Modifier.fillMaxWidth(),
+            )
+
+            if (isTransfer) {
+                WalletDropdown(
+                    label = stringResource(R.string.field_to_wallet),
+                    // The source wallet can't be the destination
+                    wallets = uiState.wallets.filter { it.id != uiState.walletId },
+                    selectedId = uiState.toWalletId,
+                    onSelect = onToWalletChange,
+                    errorText = uiState.toWalletError?.let { stringResource(it.messageRes()) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+
             // Transfers have no category
-            if (uiState.type != TransactionType.TRANSFER) {
+            if (!isTransfer) {
                 OutlinedTextField(
                     value = uiState.category,
                     onValueChange = onCategoryChange,
@@ -232,6 +271,54 @@ private fun TransactionTypeSelector(
                 shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
                 label = { Text(stringResource(labelRes)) },
             )
+        }
+    }
+}
+
+/** Read-only field that opens a list of wallets, similar to an HTML select. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun WalletDropdown(
+    label: String,
+    wallets: List<Wallet>,
+    selectedId: Long?,
+    onSelect: (Long) -> Unit,
+    modifier: Modifier = Modifier,
+    errorText: String? = null,
+) {
+    var expanded by rememberSaveable { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = it },
+        modifier = modifier,
+    ) {
+        OutlinedTextField(
+            value = wallets.firstOrNull { it.id == selectedId }?.name.orEmpty(),
+            onValueChange = {},
+            readOnly = true,
+            singleLine = true,
+            label = { Text(label) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            isError = errorText != null,
+            supportingText = { errorText?.let { Text(it) } },
+            modifier = Modifier
+                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
+                .fillMaxWidth(),
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+        ) {
+            wallets.forEach { wallet ->
+                DropdownMenuItem(
+                    text = { Text(wallet.name) },
+                    onClick = {
+                        onSelect(wallet.id)
+                        expanded = false
+                    },
+                )
+            }
         }
     }
 }
@@ -316,15 +403,32 @@ private fun AmountError.messageRes(): Int = when (this) {
     AmountError.ZERO -> R.string.error_amount_zero
 }
 
+@StringRes
+private fun ToWalletError.messageRes(): Int = when (this) {
+    ToWalletError.MISSING -> R.string.error_to_wallet_missing
+    ToWalletError.NO_OTHER_WALLET -> R.string.error_no_other_wallet
+}
+
+private val previewWallets = listOf(
+    Wallet(1, "Hotovost", WalletType.CASH, initialBalance = 0),
+    Wallet(2, "Fio", WalletType.BANK, initialBalance = 0),
+)
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun AddTransactionScreenPreview() {
     LedgerlyTheme {
         AddTransactionScreen(
-            uiState = AddTransactionUiState(date = LocalDate.of(2026, 11, 17)),
+            uiState = AddTransactionUiState(
+                wallets = previewWallets,
+                walletId = 1,
+                date = LocalDate.of(2026, 11, 17),
+            ),
             onNavigateBack = {},
             onTypeChange = {},
             onAmountChange = {},
+            onWalletChange = {},
+            onToWalletChange = {},
             onCategoryChange = {},
             onDateChange = {},
             onNoteChange = {},
@@ -339,14 +443,19 @@ private fun AddTransactionScreenErrorsPreview() {
     LedgerlyTheme {
         AddTransactionScreen(
             uiState = AddTransactionUiState(
+                type = TransactionType.TRANSFER,
                 amountText = "12,345",
+                wallets = previewWallets,
+                walletId = 1,
                 date = LocalDate.of(2026, 11, 17),
                 amountError = AmountError.INVALID,
-                categoryError = true,
+                toWalletError = ToWalletError.MISSING,
             ),
             onNavigateBack = {},
             onTypeChange = {},
             onAmountChange = {},
+            onWalletChange = {},
+            onToWalletChange = {},
             onCategoryChange = {},
             onDateChange = {},
             onNoteChange = {},
